@@ -8,6 +8,10 @@ public class Module1introductionApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Module1introductionApplication.class, args);
+
+		PaymentService paymentService = new PaymentService();
+
+		paymentService.pay();
 	}
 
 }
