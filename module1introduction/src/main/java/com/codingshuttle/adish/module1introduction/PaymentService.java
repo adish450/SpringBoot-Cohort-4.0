@@ -2,14 +2,15 @@ package com.codingshuttle.adish.module1introduction;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
-//@Component
-/*@Repository
+/*@Component
+@Repository
 @Service
 @Controller
 @RestController*/
