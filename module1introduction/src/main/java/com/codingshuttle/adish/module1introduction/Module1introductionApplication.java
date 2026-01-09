@@ -1,6 +1,5 @@
 package com.codingshuttle.adish.module1introduction;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,7 +9,7 @@ public class Module1introductionApplication implements CommandLineRunner {
 
 	final NotificationService notificationService;
 
-	public Module1introductionApplication(@Qualifier("email") NotificationService notificationService) {
+	public Module1introductionApplication(NotificationService notificationService) {
 		this.notificationService = notificationService;
 	}
 	public static void main(String[] args) {

@@ -1,11 +1,11 @@
 package com.codingshuttle.adish.module1introduction.impl;
 
 import com.codingshuttle.adish.module1introduction.NotificationService;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 @Component
-@Qualifier("email")
+@ConditionalOnProperty(name = "notification.type", havingValue = "email")
 public class EmailNotificationService implements NotificationService {
     @Override
     public void send(String message) {
