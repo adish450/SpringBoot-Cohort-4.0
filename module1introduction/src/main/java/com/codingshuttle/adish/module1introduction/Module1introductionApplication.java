@@ -1,23 +1,27 @@
 package com.codingshuttle.adish.module1introduction;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @SpringBootApplication
 public class Module1introductionApplication implements CommandLineRunner {
 
-	final NotificationService notificationService;
+	@Autowired
+	Map<String, NotificationService> notificationServices = new HashMap<>();
 
-	public Module1introductionApplication(NotificationService notificationService) {
-		this.notificationService = notificationService;
-	}
 	public static void main(String[] args) {
 		SpringApplication.run(Module1introductionApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		notificationService.send("Hello World!");
+		for (NotificationService notificationService : notificationServices.values()) {
+			notificationService.send("Hello World!");
+		}
 	}
 }
