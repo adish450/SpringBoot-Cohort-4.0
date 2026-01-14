@@ -2,10 +2,10 @@ package com.springboot.springbootwebtutorial.controllers;
 
 import com.springboot.springbootwebtutorial.dto.EmployeeDTO;
 import com.springboot.springbootwebtutorial.entities.EmployeeEntity;
-import com.springboot.springbootwebtutorial.repositories.EmployeeRepository;
+import com.springboot.springbootwebtutorial.services.EmployeeService;
+import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -17,25 +17,28 @@ public class EmployeeController {
         return "Secret Message: Hello World!";
     }*/
 
-    final private EmployeeRepository employeeRepository;
+    final private EmployeeService employeeService;
+    final private ModelMapper modelMapper;
 
-    public EmployeeController(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeController(EmployeeService employeeService, ModelMapper modelMapper) {
+        this.employeeService = employeeService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/{id}")
-    public EmployeeEntity getEmployeeById(@PathVariable Long id) {
-        return employeeRepository.findById(id).orElse(null);
+    public EmployeeDTO getEmployeeById(@PathVariable Long id) {
+        return modelMapper.map(employeeService.findById(id), EmployeeDTO.class);
     }
 
     @GetMapping
-    public List<EmployeeEntity> getEmployeesSortBy(@RequestParam(required = false) String sortBy,
+    public List<EmployeeDTO> getEmployeesSortBy(@RequestParam(required = false) String sortBy,
                                    @RequestParam(required = false) String age) {
-        return employeeRepository.findAll();
+        List<EmployeeEntity> employees = employeeService.findAll();
+        return employees.stream().map(employee -> modelMapper.map(employee, EmployeeDTO.class)).toList();
     }
 
     @PostMapping("/addEmployee")
-    public EmployeeEntity addEmployee(@RequestBody EmployeeEntity employee) {
-        return employeeRepository.save(employee);
+    public EmployeeDTO addEmployee(@RequestBody EmployeeDTO employee) {
+        return modelMapper.map(employeeService.save(modelMapper.map(employee, EmployeeEntity.class)), EmployeeDTO.class);
     }
 }
